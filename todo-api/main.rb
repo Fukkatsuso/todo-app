@@ -7,22 +7,19 @@ set :port, "8080"
 
 get '/' do
   content_type :json
-  # res = get_json
-  res = {
-    hello: "world!"
-  }.to_json
+  res = get_json
 end
 
 def db_client
   client = Mysql2::Client.new(host: "db",
                               username: "todoapp",
                               password: "password",
-                              database: "todo_db",
+                              database: "tododb",
                               port: "3306",
                               encoding: "utf8")
 end
 
 def get_json
   client = db_client
-  # client.query("SELECT * FROM todo").to_a.to_json
+  client.query("SELECT * FROM todos").to_a.to_json
 end
