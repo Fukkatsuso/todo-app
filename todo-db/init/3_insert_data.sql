@@ -1,5 +1,5 @@
 use tododb;
 
-INSERT INTO todos (id, title, content) VALUE (1, "Hello", "hello world!");
-INSERT INTO todos (id, title, content) VALUE (2, "Test", "testtest");
-INSERT INTO todos (id, title, content) VALUE (3, "programming", "sinatra server");
+INSERT INTO todos (title, content) VALUES ("Hello", "hello world!");
+INSERT INTO todos (title, content) VALUES ("Test", "testtest");
+INSERT INTO todos (title, content) VALUES ("programming", "sinatra server");
