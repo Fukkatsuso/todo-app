@@ -5,10 +5,6 @@ require "json"
 set :bind, "0.0.0.0"
 set :port, "8080"
 
-get '/' do
-  content_type :json
-  res = get_json
-end
 
 def db_client
   client = Mysql2::Client.new(host: "db",
@@ -19,7 +15,59 @@ def db_client
                               encoding: "utf8")
 end
 
-def get_json
+def db_query(q)
   client = db_client
-  client.query("SELECT * FROM todos").to_a.to_json
+  client.query(q).to_a.to_json
+end
+
+
+get '/' do
+  content_type :json
+  res = {
+    Hello: "sinatra!"
+  }.to_json
+end
+
+
+# todo全取得
+get '/todo/?' do
+  content_type :json
+  res = db_query("SELECT * FROM `todos`")
+end
+
+# todo取得(id指定)
+get '/todo/:id/?' do
+  content_type :json
+  id = params['id']
+  res = db_query("SELECT * FROM `todos` WHERE `id` = #{id}")
+end
+
+# todo作成
+post '/todo/?' do
+  title = params['title']
+  content = params['content']
+  db_query("INSERT INTO `todos` (`title`, `content`) VALUES ('#{title}', '#{content}')")
+  redirect to('/todo')
+end
+
+# todo更新
+put '/todo/:id/?' do
+  id = params['id']
+  title = params['title']
+  content = params['content']
+  db_query("UPDATE `todos` SET `title` = '#{title}', `content` = '#{content}' WHERE `id` = #{id}")
+  redirect to('/todo')
+end
+
+# todo削除
+delete '/todo/:id/?' do
+  id = params['id']
+  db_query("DELETE FROM `todos` WHERE `id` = #{id}")
+  redirect to('/todo')
+end
+
+
+not_found do
+  "not found"
+  # redirect to('/')
 end
