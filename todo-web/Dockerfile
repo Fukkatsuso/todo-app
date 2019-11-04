@@ -1,15 +1,15 @@
 FROM node:lts-alpine
 
-RUN mkdir /app
 WORKDIR /app
 
 RUN npm install -g @vue/cli
 
-CMD ["/bin/sh"]
+EXPOSE 3000
 
-### initial setup ###
-# $ docker build -t vue-cli-setup .
-# $ docker run -it --rm -v `pwd`:/app vue-cli-setup
+### for vue.js initial setup ###
+# $ docker build -t vue-cli .
+# $ docker run -it -v `pwd`:/app vue-cli
+# $ docker container exec -it vue-cli sh
 # /app # vue create .
 # Vue CLI v4.0.5
 # ? Please pick a preset: Manually select features

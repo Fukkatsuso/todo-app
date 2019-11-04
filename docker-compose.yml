@@ -2,7 +2,8 @@ version: "3"
 
 services:
   api:
-    build: ./todo-api/
+    # build: ./todo-api/
+    image: todo-api-sinatra:latest
     volumes:
       - ./todo-api:/todo-api/app
     links: 
@@ -11,7 +12,7 @@ services:
       - 8080:8080
 
   db:
-    build: ./todo-db/
+    image: todo-db-mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: tododb
@@ -23,3 +24,14 @@ services:
       - ./todo-db/init:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+
+  web:
+    image: todo-web-vue:latest
+    volumes:
+      - ./todo-web:/app
+    links:
+      - api
+      - db
+    ports:
+      - 3000:3000
+    command: "npm run serve -- --port 3000 --host 0.0.0.0"
