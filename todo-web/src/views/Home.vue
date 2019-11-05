@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Changed message!"/>
+    {{ info }}
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+// import axios from 'axios'
+// vue add axios でできるらしい
 
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      info: null
+    }
+  },
+  mounted() {
+    axios
+      .get("http://localhost:8080/")
+      .then(response => (this.info = response))
+      .catch(error => console.log(error))
   }
 }
 </script>
