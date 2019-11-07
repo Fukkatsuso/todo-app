@@ -1,12 +1,10 @@
 <template>
   <div class="todo-new">
-    <form v-on:submit.prevent="submit">
+    <form v-on:submit.prevent="createTodo">
       <input v-model="todo.title" type="text" placeholder="title"/>
       <textarea v-model="todo.content" type="text" placeholder="content"/>
       <button type="submit">create!</button>
     </form>
-    <div>{{ todo.title }}</div>
-    <div>{{ todo.content }}</div>
   </div>
 </template>
 
@@ -24,7 +22,7 @@ export default {
     }
   },
   methods: {
-    submit: function() {
+    createTodo: function() {
       let params = new URLSearchParams()
       if (this.todo.title != '') {
         params.append('title', this.todo.title)
