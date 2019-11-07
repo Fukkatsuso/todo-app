@@ -5,8 +5,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
-// vue add axios でできるらしい
+import axios from 'axios'
 
 export default {
   name: 'home',
@@ -17,7 +16,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8080/")
+      .get("/api")
       .then(response => (this.info = response))
       .catch(error => console.log(error))
   }
