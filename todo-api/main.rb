@@ -52,7 +52,6 @@ class Main < Sinatra::Application
     title = params['title']
     content = params['content']
     db_query("INSERT INTO `todos` (`title`, `content`) VALUES ('#{title}', '#{content}')")
-    redirect to('/todo')
   end
 
   # todo更新
@@ -61,19 +60,16 @@ class Main < Sinatra::Application
     title = params['title']
     content = params['content']
     db_query("UPDATE `todos` SET `title` = '#{title}', `content` = '#{content}' WHERE `id` = #{id}")
-    redirect to('/todo')
   end
 
   # todo削除
   delete '/api/todo/:id/?' do
     id = params['id']
     db_query("DELETE FROM `todos` WHERE `id` = #{id}")
-    redirect to('/todo')
   end
 
   not_found do
     "not found"
-    # redirect to('/')
   end
 
   run! if app_file == $0
