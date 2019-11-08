@@ -26,10 +26,10 @@ export default {
   name: 'TodoList',
   data() {
     return {
-      todos: null
+      todos: []
     }
   },
-  mounted() {
+  created() {
     this.getTodos()
   },
   methods: {
@@ -44,7 +44,8 @@ export default {
         .delete('/api/todo/' + id)
         .then(response => console.log(response))
         .catch(error => console.log(error))
-      this.getTodos()
+      // todos配列からも削除
+      this.todos = this.todos.filter(t => t.id !== id)
     }
   }
 }
